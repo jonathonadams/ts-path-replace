@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "../out/testing",
+    "tsBuildInfoFile": "../out/buildcache/testing.tsbuildinfo",
+    "sourceMap": false,
+    "composite": true,
+    "declaration": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "target": "es2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "lib": ["es2018", "esnext.asynciterable"],
+    "paths": {
+      "@testing/*": ["testing/src/*"],
+      "@lib1": ["libs/lib1/src/index.ts"],
+      "@lib2": ["libs/lib2/src/index.ts"],
+      "@internal": ["apps/app1/src/internal.ts"],
+      "@internal2": ["apps/app1/src/int2/internal2.ts"]
+    }
+  }
+}

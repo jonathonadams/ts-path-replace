@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "../../out/libs/lib1",
+    "tsBuildInfoFile": "../../out/buildcache/lib1.tsbuildinfo",
+    "sourceMap": false,
+    "composite": true,
+    "declaration": true
+  }
+}

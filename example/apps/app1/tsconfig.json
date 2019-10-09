@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "../../out/apps/app1",
+    "tsBuildInfoFile": "../../out/buildcache/app1.tsbuildinfo",
+    "sourceMap": false,
+    "composite": true,
+    "declaration": true
+  },
+  "references": [
+    { "path": "../../libs/lib2/tsconfig.json" },
+    { "path": "../../testing/tsconfig.json" }
+  ]
+}
