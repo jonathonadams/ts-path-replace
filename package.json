@@ -39,7 +39,7 @@
     "lint": "tslint --project tsconfig.json",
     "test": "jest --coverage",
     "validate": "npm run lint && npm run test && npm run example:test",
-    "prepublish": "npm run build && npm run validate",
+    "prepare": "npm run build && npm run validate",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

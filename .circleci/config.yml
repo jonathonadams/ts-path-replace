@@ -1,7 +1,7 @@
 version: 2
 
 setup: &setup
-  working_directory: ~/utz-tspr
+  working_directory: ~/utz-ts-path-replace
   docker:
     - image: circleci/node:latest
 
