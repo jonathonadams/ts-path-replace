@@ -10,5 +10,3 @@ console.log('');
 lib2Logger();
 
 testingLogger();
-
-console.log('changing');
