@@ -1,6 +1,6 @@
 # @uqt/ts-path-replace
 
-CLI tool and runtime API to replace TypeScript paths from `@alias/import/paths` to `../relative/import/paths`
+CLI tool to replace TypeScript paths from `@alias/import/paths` to `../relative/import/paths`
 
 ## Why this package
 
@@ -13,7 +13,7 @@ code that is not under the source directory of the current project. At the time 
 
 ## Solution
 
-The package provides both a CLI as well as exposing a runtime API to programmatic rewrite and replace the imports paths of a typescript project (and optionally the 'referenced' projects).
+The package provides a CLI and runtime API to rewrite and replace the imports paths of a typescript project. Additionally it will also replace any referenced projects.
 
 ## Versioning
 
@@ -23,10 +23,10 @@ The package follows [semver](https://semver.org/) versioning and releases are au
 
 ```bash
 # Install Globally
-$ npm install -g @uqt/tspr
+npm install -g @uqt/ts-path-replace
 
 # Install locally
-$ npm install --save-dev @uqt/tspr
+ npm install --save-dev @uqt/ts-path-replacr
 ```
 
 ## Usage
@@ -57,12 +57,12 @@ $ npx tspr --tsConfig path/to/tsconfig.json --references true --watch true
 
 ```js
 // commonjs
-const tspr = require('@uqt/tspr');
+const tspr = require('@uqt/ts-path-replace');
 
 tspr.tsPathReplace({ path: 'path/to/tsconfig.json' });
 
-// es6
-import { tsPathReplace } from '@uqt/tspr';
+// ES6
+import { tsPathReplace } from '@uqt/ts-path-replace';
 
 tsPathReplace({
   path: 'path/to/tsconfig.json',
@@ -73,27 +73,32 @@ tsPathReplace({
 
 ## API Documentation
 
-### CLI Interface
-
 ```bash
+# CLI
 tspr [--option]
 ```
 
-### Programmatically
-
 ```JavaScript
+// run time
 tsPathReplace([options]);
 ```
 
 **Options** \<Object\>
 
-| Option                 | Description                                                                                  |
-| ---------------------- | -------------------------------------------------------------------------------------------- |
-| tsConfig \<string\>    | Path to the json config file to process **Default:** `tsconfig.json`                         |
-| references \<boolean\> | To also replace imports in any referenced projects **Default:** `false`                      |
-| watch \<boolean\>      | Watch the output directory for file changes and re-run the path replace **Default:** `false` |
+| Option                  | Description                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| tsConfig: **string**    | Path to the json config file to process **Default:** `tsconfig.json`                         |
+| references: **boolean** | To also replace imports in any referenced projects **Default:** `false`                      |
+| watch: **boolean**      | Watch the output directory for file changes and re-run the path replace **Default:** `false` |
 
-## Examples
+**Returns** Promise\<Object>
+
+| Property                   | Description                                                       |
+| -------------------------- | ----------------------------------------------------------------- |
+| running: **boolean**       | If the process is still running (watch mode)                      |
+| stop(): **Promise\<void>** | A method to stop the process if it currently running (watch mode) |
+
+## Example
 
 There is an example of a 'monorepo' style setup located in the /example directory.
 

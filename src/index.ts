@@ -10,6 +10,8 @@ import { resolveConfigPaths } from './resolver';
 import { replaceAliasImports } from './replace-aliases';
 import { error } from './logging';
 
+export { tsPathReplace };
+
 /**
  * As of TSv3.0, external projects can be referenced in the 'references' property
  * of the tsconfig.json. If `references` is true, this function will attempt to
@@ -27,7 +29,7 @@ import { error } from './logging';
  * }={}]
  * @returns
  */
-export async function tsPathReplace({
+async function tsPathReplace({
   tsConfig = 'tsconfig.json',
   references,
   watch: watchFiles
