@@ -46,8 +46,13 @@ export async function replaceAliasImports(
         const regexStr = `(?<=[ from |require(]["|'])${key}(?=["|'|\\/])`;
         const regex = new RegExp(regexStr, 'g');
 
+        // because windows will read the referenced projects paths with "\", replace them with posix separators "/"
+        const replacementString = `${addPathDepthFromCWD(
+          depthFromRoot
+        )}${relativePath.replace(/\\/g, '/')}`;
+
         options.from.push(regex);
-        options.to.push(`${addPathDepthFromCWD(depthFromRoot)}${relativePath}`);
+        options.to.push(replacementString);
       });
 
       // Set the files property

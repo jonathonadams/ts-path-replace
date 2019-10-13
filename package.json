@@ -33,7 +33,7 @@
     "build": "tsc",
     "preexample:build": "rimraf example/out",
     "example:build": "tsc --build example/apps/app1/tsconfig.json example/apps/app2/tsconfig.json",
-    "example:tspr": "./bin/tspr --tsConfig example/apps/app1/tsconfig.json --references true && node example/test.js",
+    "example:tspr": "node bin/tspr --tsConfig example/apps/app1/tsconfig.json --references true && node example/test.js",
     "example:run": "node example/out/apps/app1/index.js && node example/out/apps/app2/index.js",
     "example:test": "npm run example:build && npm run example:tspr && npm run example:run",
     "lint": "tslint --project tsconfig.json",
