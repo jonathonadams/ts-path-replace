@@ -1,6 +1,6 @@
 {
   "name": "@uqt/ts-path-replace",
-  "version": "0.0.2",
+  "version": "0.0.0-development",
   "description": "CLI Tool to replace TypeScript \"@alias\" paths to relative paths",
   "main": "dist/index.js",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/unquenchablethyrst/ts-paths-replace"
+    "url": "https://github.com/unquenchablethyrst/ts-path-replace"
   },
   "files": [
     "dist",
