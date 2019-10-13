@@ -1,6 +1,6 @@
 import { resolve, dirname, extname, join } from 'path';
-import fs, { promises as fsPromises, access, FSWatcher } from 'fs';
-const { stat } = fsPromises;
+import fs, { access, FSWatcher } from 'fs';
+const { stat } = fs.promises;
 import { promisify } from 'util';
 import path from 'path';
 import glob from 'glob';
