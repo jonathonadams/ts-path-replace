@@ -50,15 +50,9 @@ workflows:
   build-and-validate:
     jobs:
       - checkout-and-install:
-          filters:
-            branches:
-              only: master
       - build-and-validate:
           requires:
             - checkout-and-install
-          filters:
-            branches:
-              only: master
       - release:
           requires:
             - build-and-validate
