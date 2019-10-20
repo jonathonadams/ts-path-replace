@@ -26,7 +26,7 @@ The package follows [semver](https://semver.org/) versioning and releases are au
 npm install -g @uqt/ts-path-replace
 
 # Install locally
- npm install --save-dev @uqt/ts-path-replacr
+npm install --save-dev @uqt/ts-path-replacr
 ```
 
 ## Usage
