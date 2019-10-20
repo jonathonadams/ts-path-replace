@@ -1,6 +1,6 @@
 {
   "name": "@uqt/ts-path-replace",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "CLI Tool to replace TypeScript \"@alias\" paths to relative paths",
   "main": "dist/index.js",
   "bin": {

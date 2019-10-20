@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/unquenchablethyrst/ts-path-replace/compare/v0.0.4...v0.0.5) (2019-10-20)
+
+
+### Bug Fixes
+
+* **watch:** dont' resolve fileName to the output directory ([44ce2ae](https://github.com/unquenchablethyrst/ts-path-replace/commit/44ce2ae))
+
 ## [0.0.4](https://github.com/unquenchablethyrst/ts-path-replace/compare/v0.0.3...v0.0.4) (2019-10-20)
 
 
