@@ -133,17 +133,14 @@ export function watcherCloseHandler(watcher: FSWatcher): Promise<void> {
 }
 
 export function onOutDirChange(outDir: string, dictionary: IPathDictionary) {
-  return (eventType: string, fileName: string | Buffer) => {
+  return (eventType: string, fileName: string) => {
     if (eventType === 'update') {
       try {
-        // get the file extension because we only want to ao re-write .js & .jsx files
-        const extension = extname(fileName as string);
+        // get the file extension because we only want to re-write .js & .jsx files
+        const extension = extname(fileName);
         if (extension === '.js' || extension === '.jsx') {
-          // The files are not fully resolved, so only join with the output directory (where watching from)
-          const file = join(outDir, fileName as string);
           // The file needs to be an array here
-          // ignore any errors on watch
-          replaceAliasImports(outDir, [file], dictionary);
+          replaceAliasImports(outDir, [fileName], dictionary);
         }
       } catch (err) {
         // ignore error
