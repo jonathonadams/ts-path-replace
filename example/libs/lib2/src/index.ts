@@ -5,4 +5,8 @@ export function lib2Logger() {
   return logger();
 }
 
-const test = testingLogger;
+export function nestedLib2Logger() {
+  console.log('Logging from nested directory in lib2');
+}
+
+export const test = testingLogger;
