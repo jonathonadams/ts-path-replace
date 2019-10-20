@@ -1,4 +1,3 @@
-import path from 'path';
 import replace from 'replace-in-file';
 import { addPathDepthFromCWD, doesStringEndInWildcard } from './utils';
 
@@ -19,7 +18,7 @@ export async function replaceAliasImports(
       const substr = file.substr(outDir.length + 1);
 
       // If in the root directory, length is 1, hence subtract one to get the depth from root
-      const depthFromRoot = substr.split(path.sep).length - 1;
+      const depthFromRootDirectory = substr.split(/\\|\//).length - 1;
 
       const options: any = {
         from: [],
@@ -48,7 +47,7 @@ export async function replaceAliasImports(
 
         // because windows will read the referenced projects paths with "\", replace them with posix separators "/"
         const replacementString = `${addPathDepthFromCWD(
-          depthFromRoot
+          depthFromRootDirectory
         )}${relativePath.replace(/\\/g, '/')}`;
 
         options.from.push(regex);

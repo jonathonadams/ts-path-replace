@@ -49,16 +49,10 @@ workflows:
   version: 2
   build-and-validate:
     jobs:
-      - checkout-and-install:
-          filters:
-            branches:
-              only: master
+      - checkout-and-install
       - build-and-validate:
           requires:
             - checkout-and-install
-          filters:
-            branches:
-              only: master
       - release:
           requires:
             - build-and-validate
