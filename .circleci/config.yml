@@ -49,7 +49,7 @@ workflows:
   version: 2
   build-and-validate:
     jobs:
-      - checkout-and-install:
+      - checkout-and-install
       - build-and-validate:
           requires:
             - checkout-and-install
