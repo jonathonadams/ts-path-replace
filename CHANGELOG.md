@@ -1,3 +1,10 @@
+## [0.0.4](https://github.com/unquenchablethyrst/ts-path-replace/compare/v0.0.3...v0.0.4) (2019-10-20)
+
+
+### Bug Fixes
+
+* replace path.sep with forwardslash when calculating file depth ([8a9bff7](https://github.com/unquenchablethyrst/ts-path-replace/commit/8a9bff7))
+
 ## [0.0.3](https://github.com/unquenchablethyrst/ts-path-replace/compare/v0.0.2...v0.0.3) (2019-10-13)
 
 
