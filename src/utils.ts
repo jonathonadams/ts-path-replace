@@ -96,7 +96,6 @@ export async function referenceConfigDirectories(configPath: string) {
 
 export function filterDictionaryKey(baseUrl: string, rootDir: string) {
   return function filter(projectKey: string): boolean {
-    // TODO -> is using the base url correct here?
     const rootDirOfProject = resolve(baseUrl, dirname(projectKey));
     return rootDirOfProject.includes(rootDir);
   };
