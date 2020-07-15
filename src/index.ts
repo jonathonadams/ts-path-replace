@@ -39,7 +39,7 @@ async function tsPathReplace({
   watch?: boolean;
 } = {}) {
   try {
-    console.log('[TSPR] - Starting replacing TypeScript paths.');
+    console.log('[TSPR] Starting replacing TypeScript paths.');
 
     const pathReplace = await recurTsPathReplace(
       tsConfig,
@@ -47,10 +47,10 @@ async function tsPathReplace({
       watchFiles
     );
 
-    console.log('[TSPR] - Finished replacing TypeScript paths.');
+    console.log('[TSPR] Finished replacing TypeScript paths.');
 
     if (watchFiles) {
-      console.log('[TSPR] - Watching output directories for file changes');
+      console.log('[TSPR] Watching output directories for file changes');
     }
 
     return pathReplace;
