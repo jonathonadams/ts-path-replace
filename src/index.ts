@@ -4,7 +4,7 @@ import {
   jsFileSearch,
   watcherCloseHandler,
   onOutDirChange,
-  doesDirExist
+  doesDirExist,
 } from './utils';
 import { resolveConfigPaths } from './resolver';
 import { replaceAliasImports } from './replace-aliases';
@@ -32,24 +32,25 @@ export { tsPathReplace };
 async function tsPathReplace({
   tsConfig = 'tsconfig.json',
   references,
-  watch: watchFiles
+  watch: watchFiles,
 }: {
   tsConfig?: string;
   references?: boolean;
   watch?: boolean;
 } = {}) {
   try {
+    console.log('[TSPR] - Starting replacing TypeScript paths.');
+
     const pathReplace = await recurTsPathReplace(
       tsConfig,
       references,
       watchFiles
     );
 
-    // send to stdout that the process is complete
-    console.log('Finished replacing TypeScript paths.');
+    console.log('[TSPR] - Finished replacing TypeScript paths.');
 
     if (watchFiles) {
-      console.log('Watching output directories for file changes');
+      console.log('[TSPR] - Watching output directories for file changes');
     }
 
     return pathReplace;
@@ -139,7 +140,7 @@ async function recurTsPathReplace(
      */
     stop(): Promise<void> {
       // from the collection of suProcesses create an array of 'stop' promises
-      const toClose = subProcesses.map(re => re.stop());
+      const toClose = subProcesses.map((re) => re.stop());
       if (watcher) {
         toClose.push(watcherCloseHandler(watcher));
         watcher.close();
@@ -149,6 +150,6 @@ async function recurTsPathReplace(
       return Promise.all(toClose).then(() => {
         this.running = false;
       });
-    }
+    },
   };
 }
