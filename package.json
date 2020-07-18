@@ -2,6 +2,7 @@
   "name": "@uqt/ts-path-replace",
   "version": "0.0.5",
   "description": "CLI Tool to replace TypeScript \"@alias\" paths to relative paths",
+  "type": "commonjs",
   "main": "dist/index.js",
   "bin": {
     "tspr": "bin/tspr"
@@ -37,8 +38,7 @@
     "example:run": "node example/out/apps/app1/index.js && node example/out/apps/app2/index.js",
     "example:test": "npm run example:build && npm run example:tspr && npm run example:run",
     "lint": "tslint --project tsconfig.json",
-    "test": "jest --coverage",
-    "validate": "npm run lint && npm run test && npm run example:test",
+    "validate": "npm run lint && npm run example:test",
     "prepare": "npm run build && npm run validate",
     "semantic-release": "semantic-release"
   },
@@ -53,19 +53,16 @@
     "@commitlint/config-conventional": "^9.1.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
-    "@types/jest": "^26.0.4",
     "@types/lodash.merge": "^4.6.6",
     "@types/minimist": "^1.2.0",
     "@types/node": "^14.0.23",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
     "husky": "^4.2.5",
-    "jest": "^26.1.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1",
-    "ts-jest": "^26.1.2",
     "tslint": "^6.1.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "husky": {
     "hooks": {
