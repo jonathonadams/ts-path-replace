@@ -1,4 +1,4 @@
-import replace from 'replace-in-file';
+import { replaceInFile } from 'replace-in-file';
 import { addPathDepthFromCWD, doesStringEndInWildcard } from './utils';
 
 // TODO -> Performance cache for imports and depths
@@ -9,7 +9,7 @@ export async function replaceAliasImports(
   paths: { [alias: string]: string | undefined }
 ) {
   return Promise.all(
-    files.map(file => {
+    files.map((file) => {
       /**
        * Get the file location from the root directory (out directory)
        * NOTE: Need to add 1 to the length of the outDir because the ourDir does
@@ -22,10 +22,10 @@ export async function replaceAliasImports(
 
       const options: any = {
         from: [],
-        to: []
+        to: [],
       };
 
-      Object.keys(paths).forEach(key => {
+      Object.keys(paths).forEach((key) => {
         let relativePath = paths[key] as string;
 
         /**
@@ -57,7 +57,7 @@ export async function replaceAliasImports(
       // Set the files property
       options['files'] = file;
       // Call the replace function
-      return replace(options);
+      return replaceInFile(options);
     })
   );
 }

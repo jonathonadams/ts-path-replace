@@ -1,24 +1,11 @@
-import { resolve, dirname, extname, join } from 'path';
+import { resolve, dirname, extname } from 'path';
 import fs, { access, FSWatcher } from 'fs';
-const { stat } = fs.promises;
-import { promisify } from 'util';
+const { stat, readdir } = fs.promises;
 import path from 'path';
-import glob from 'glob';
 import { IPathDictionary, IAliasPaths } from './types';
 import { error } from './logging';
 import { createCombinedConfigObject } from './combined-config';
 import { replaceAliasImports } from './replace-aliases';
-
-export const asyncGlob = promisify(glob);
-
-export function jsFilesPattern(outDir: string) {
-  return `${outDir}/**/*.js`;
-}
-
-// This works because the last function to be composed is the async function
-export async function jsFileSearch(outDir: string) {
-  return asyncGlob(jsFilesPattern(outDir));
-}
 
 export function createPathDictionary(paths: IAliasPaths): IPathDictionary {
   // NOTE, only takes the first argument in the array of path
@@ -35,7 +22,7 @@ function dictionaryReducer(paths: IAliasPaths) {
 }
 
 export function curryResolve(path1: string) {
-  return function(path2: string) {
+  return function (path2: string) {
     return path.resolve(path1, path2);
   };
 }
@@ -109,7 +96,6 @@ export async function referenceConfigDirectories(configPath: string) {
 
 export function filterDictionaryKey(baseUrl: string, rootDir: string) {
   return function filter(projectKey: string): boolean {
-    // TODO -> is using the base url correct here?
     const rootDirOfProject = resolve(baseUrl, dirname(projectKey));
     return rootDirOfProject.includes(rootDir);
   };
@@ -151,8 +137,33 @@ export function onOutDirChange(outDir: string, dictionary: IPathDictionary) {
 
 export function doesDirExist(dir: string): Promise<boolean> {
   return new Promise((res, reject) => {
-    access(dir, fs.constants.F_OK, err => {
+    access(dir, fs.constants.F_OK, (err) => {
       err ? res(false) : res(true);
     });
+  });
+}
+
+async function getFiles(dir: string): Promise<string[]> {
+  const dirents = await readdir(dir, { withFileTypes: true });
+  const files: string[][] = await Promise.all(
+    dirents.map((d) => {
+      const subPath = resolve(dir, d.name);
+      if (d.isDirectory()) {
+        return getFiles(subPath);
+      } else {
+        return Promise.resolve([subPath]);
+      }
+    })
+  );
+
+  return Array.prototype.concat(...files);
+}
+
+export async function jsFileSearch(dir: string): Promise<string[]> {
+  const files = await getFiles(dir);
+  return files.filter((f) => {
+    const segments = f.split('/');
+    const fileExtension = segments[segments.length - 1].split('.')[1];
+    return fileExtension === 'js';
   });
 }
