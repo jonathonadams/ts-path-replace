@@ -1,3 +1,15 @@
+# [1.0.0](https://github.com/jonathonadams/ts-path-replace/compare/v0.0.5...v1.0.0) (2020-07-19)
+
+
+### Bug Fixes
+
+* update all dependencies ([863f208](https://github.com/jonathonadams/ts-path-replace/commit/863f2086d283b6b021b3c633de8dee69081672c1))
+
+
+### BREAKING CHANGES
+
+* The repository ownership has bee transferred to @jonathonadams
+
 ## [0.0.5](https://github.com/unquenchablethyrst/ts-path-replace/compare/v0.0.4...v0.0.5) (2019-10-20)
 
 
