@@ -144,26 +144,25 @@ export function doesDirExist(dir: string): Promise<boolean> {
 }
 
 async function getFiles(dir: string): Promise<string[]> {
-  const dirents = await readdir(dir, { withFileTypes: true });
-  const files: string[][] = await Promise.all(
-    dirents.map((d) => {
-      const subPath = resolve(dir, d.name);
-      if (d.isDirectory()) {
-        return getFiles(subPath);
-      } else {
-        return Promise.resolve([subPath]);
-      }
-    })
-  );
-
-  return Array.prototype.concat(...files);
+  try {
+    const dirents = await readdir(dir, { withFileTypes: true });
+    const files: string[][] = await Promise.all(
+      dirents.map((d) => {
+        const subPath = resolve(dir, d.name);
+        if (d.isDirectory()) {
+          return getFiles(subPath);
+        } else {
+          return Promise.resolve([subPath]);
+        }
+      })
+    );
+    return Array.prototype.concat(...files);
+  } catch (e) {
+    return [];
+  }
 }
 
 export async function jsFileSearch(dir: string): Promise<string[]> {
   const files = await getFiles(dir);
-  return files.filter((f) => {
-    const segments = f.split('/');
-    const fileExtension = segments[segments.length - 1].split('.')[1];
-    return fileExtension === 'js';
-  });
+  return files.filter((f) => extname(f) === '.js');
 }
