@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.0...v1.0.1) (2020-07-20)
+
+
+### Bug Fixes
+
+* handle if output directory does not exist ([c1568c2](https://github.com/jonathonadams/ts-path-replace/commit/c1568c25387155f00368196dfb38a235bdcea906))
+
 # [1.0.0](https://github.com/jonathonadams/ts-path-replace/compare/v0.0.5...v1.0.0) (2020-07-19)
 
 
