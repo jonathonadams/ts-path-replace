@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.1...v1.0.2) (2020-07-22)
+
+
+### Bug Fixes
+
+* handle if config is solution file ([fb69983](https://github.com/jonathonadams/ts-path-replace/commit/fb69983294990480ec8977188d4e0578aca11d00))
+
 ## [1.0.1](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.0...v1.0.1) (2020-07-20)
 
 
