@@ -1,9 +1,18 @@
-import { resolve, relative, format, dirname, basename, sep } from 'path';
+import {
+  resolve,
+  relative,
+  format,
+  dirname,
+  basename,
+  sep,
+  join,
+  normalize,
+} from 'path';
 import {
   IFilteredReferences,
   IResolvedConfigPaths,
   IPathDictionary,
-  IAliasPaths
+  IAliasPaths,
 } from './types';
 import { createCombinedConfigObject } from './combined-config';
 import {
@@ -11,7 +20,7 @@ import {
   createAbsConfigPath,
   areDirectoriesDefined,
   referenceConfigDirectories,
-  filterDictionaryKey
+  filterDictionaryKey,
 } from './utils';
 
 /**
@@ -35,9 +44,9 @@ export async function resolveConfigPaths(
   const {
     config: {
       compilerOptions: { paths },
-      references
+      references,
     },
-    pathDirectories: { baseUrl, outDir, rootDir }
+    pathDirectories: { baseUrl, outDir, rootDir },
   } = await createCombinedConfigObject(configPath);
 
   // If there is no paths referenced, then there is nothing to do
@@ -50,7 +59,7 @@ export async function resolveConfigPaths(
     // The internal imports is the starting of the total dictionary
     const {
       internal: dictionary,
-      external
+      external,
     } = await filterReferencedAndResolveInternal(
       paths,
       baseUrl as string,
@@ -77,49 +86,65 @@ export async function resolveConfigPaths(
        * g. Add to the dictionary of imports to replace
        */
       for (const ref of references) {
-        // a)
-        const absolutePathToReferenceConfig = await createAbsConfigPath(
-          ref.path,
-          configDir
-        );
+        if (!isReferenceInitialConfig(configDir, configPath, ref.path)) {
+          // a)
+          const absolutePathToReferenceConfig = await createAbsConfigPath(
+            ref.path,
+            configDir
+          );
 
-        // b)
-        referenceTsConfigPaths.push(absolutePathToReferenceConfig);
+          // b)
+          referenceTsConfigPaths.push(absolutePathToReferenceConfig);
 
-        // c)
-        const referencedProjectDirectories = await referenceConfigDirectories(
-          absolutePathToReferenceConfig
-        );
+          // c)
+          const referencedProjectDirectories = await referenceConfigDirectories(
+            absolutePathToReferenceConfig
+          );
 
-        // d)
-        const referenceObject = addAdditionalFileReferences(
-          referencedProjectDirectories,
-          refDictionary
-        );
+          // d)
+          const referenceObject = addAdditionalFileReferences(
+            referencedProjectDirectories,
+            refDictionary
+          );
 
-        // e)
-        const relativeDir = relative(
-          outDir,
-          resolve(referenceObject.outDir, referenceObject.relativeToProjectSrc)
-        );
+          if (referenceObject !== null) {
+            // e)
+            const relativeDir = relative(
+              outDir,
+              resolve(
+                referenceObject.outDir,
+                referenceObject.relativeToProjectSrc
+              )
+            );
 
-        // f)
-        const computedImport = format({
-          dir: relativeDir,
-          base: referenceObject.baseFile
-        });
+            // f)
+            const computedImport = format({
+              dir: relativeDir,
+              base: referenceObject.baseFile,
+            });
 
-        // g)
-        dictionary[referenceObject.alias] = computedImport;
+            // g)
+            dictionary[referenceObject.alias] = computedImport;
+          }
+        }
       }
     }
 
     return {
       dictionary,
       outDir: outDir as string,
-      referenceTsConfigPaths
+      referenceTsConfigPaths,
     };
   }
+}
+
+function isReferenceInitialConfig(
+  configDir: string,
+  configPath: string,
+  refConfig: string
+): boolean {
+  const path = join(configDir, refConfig);
+  return normalize(configPath) === normalize(path);
 }
 
 /**
@@ -148,7 +173,7 @@ export function addAdditionalFileReferences(
     configDir,
     rootDir,
     outDir,
-    baseUrl
+    baseUrl,
   }: {
     configDir: string;
     rootDir: string;
@@ -162,25 +187,31 @@ export function addAdditionalFileReferences(
 
   const filterFunction = filterDictionaryKey(baseUrl, rootDir);
 
-  // There will only be one project left, so destructor it to get teh key
+  // There will only be one project left, so destructor it to get the key
+  // Note that in some scenarios, such as a solution ts config that references
+  // multiple others, the project key may not exist anyway in the dictionary
   const [projectKey] = dictionaryKeys.filter(filterFunction);
 
-  const additionalProperties = {
-    alias: dictionary[projectKey],
-    baseFile: basename(projectKey, '.ts'),
-    relativeToProjectSrc: relative(
-      rootDir,
-      resolve(baseUrl, dirname(projectKey))
-    )
-  };
+  if (projectKey) {
+    const additionalProperties = {
+      alias: dictionary[projectKey],
+      baseFile: basename(projectKey, '.ts'),
+      relativeToProjectSrc: relative(
+        rootDir,
+        resolve(baseUrl, dirname(projectKey))
+      ),
+    };
 
-  return {
-    configDir,
-    rootDir,
-    outDir,
-    baseUrl,
-    ...additionalProperties
-  };
+    return {
+      configDir,
+      rootDir,
+      outDir,
+      baseUrl,
+      ...additionalProperties,
+    };
+  }
+
+  return null;
 }
 
 /**
@@ -210,7 +241,7 @@ export function filterReferencedAndResolveInternal(
 
   const keys = Object.keys(paths);
 
-  keys.forEach(key => {
+  keys.forEach((key) => {
     if (paths[key].length > 0) {
       // first entry in the path array
       alias = paths[key].slice().shift() as string;
@@ -229,7 +260,7 @@ export function filterReferencedAndResolveInternal(
 
         relativeFile = format({
           dir: relativeDirectory,
-          base: baseFile
+          base: baseFile,
         });
 
         // Split via the path separator (win/linux)
@@ -245,6 +276,6 @@ export function filterReferencedAndResolveInternal(
 
   return {
     internal: internalDictionary,
-    external
+    external,
   };
 }
