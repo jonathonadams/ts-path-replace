@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.2...v1.0.3) (2020-11-17)
+
+
+### Bug Fixes
+
+* update deps to fix npm vulnerabilities ([84b5b68](https://github.com/jonathonadams/ts-path-replace/commit/84b5b68834315f5c267679d753e3fe73b16d6e77))
+* update deps to vix npm vulnerabilities ([b4b9d92](https://github.com/jonathonadams/ts-path-replace/commit/b4b9d9200ccafad741266e7b97505db47e9c7675))
+
 ## [1.0.2](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.1...v1.0.2) (2020-07-22)
 
 
