@@ -67,7 +67,7 @@ import { tsPathReplace } from '@uqt/ts-path-replace';
 tsPathReplace({
   path: 'path/to/tsconfig.json',
   references: true,
-  watch: true
+  watch: true,
 });
 ```
 
@@ -88,8 +88,9 @@ tsPathReplace([options]);
 | Option                  | Description                                                                                  |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
 | tsConfig: **string**    | Path to the json config file to process **Default:** `tsconfig.json`                         |
-| references: **boolean** | To also replace imports in any referenced projects **Default:** `false`                      |
-| watch: **boolean**      | Watch the output directory for file changes and re-run the path replace **Default:** `false` |
+| references: **boolean** | Also replace imports in any referenced projects **Default:** `false`                         |
+| watch / w: **boolean**  | Watch the output directory for file changes and re-run the path replace **Default:** `false` |
+| ext **string**          | Append a file extension to the paths. **Default:** no extension added                        |
 
 **Returns** Promise\<Object>
 
