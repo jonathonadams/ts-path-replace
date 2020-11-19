@@ -1,18 +1,14 @@
 export function printHelp() {
-  console.log('tspr usage:');
-  console.log('');
-  console.log('--help                         print this help');
-  console.log(
-    '--tsConfig={FILE_PATH}         read the tsconfig.json from {FILE_PATH} and attempt to replace all "@alias" imports with "../relative/imports"'
-  );
-  console.log(
-    '--references={BOOLEAN}         to replace all the referenced project "@alias" paths. Defaults to false"'
-  );
-  console.log(
-    '--watch={BOOLEAN}              watch the output directory of projects for file changes and re-run the path replacement. Defaults to false"'
-  );
-  console.log('');
-  console.log('');
+  const help = `
+  tspr usage:
+
+  --help          print this help.
+  --tsConfig      Path to the json config file to process. Default: 'tsconfig.json'.
+  -references     Also replace imports in any referenced projects. Default: false.
+  --watch, -w     Watch the output directory of all projects for file changes and re-run. Default: false.
+  --ext           Append a file extension to the paths. Default: no extension.
+  `;
+  console.log(help);
 }
 
 export function error(err: any, showHelp = false) {
