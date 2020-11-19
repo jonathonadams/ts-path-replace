@@ -33,10 +33,12 @@ async function tsPathReplace({
   tsConfig = 'tsconfig.json',
   references,
   watch: watchFiles,
+  ext,
 }: {
   tsConfig?: string;
   references?: boolean;
   watch?: boolean;
+  ext?: string;
 } = {}) {
   try {
     console.log('[TSPR] Starting replacing TypeScript paths.');
@@ -44,7 +46,8 @@ async function tsPathReplace({
     const pathReplace = await recurTsPathReplace(
       tsConfig,
       references,
-      watchFiles
+      watchFiles,
+      ext
     );
 
     console.log('[TSPR] Finished replacing TypeScript paths.');
@@ -70,6 +73,7 @@ async function recurTsPathReplace(
   tsConfigPath: string,
   refs: boolean = false,
   watchFiles: boolean = false,
+  ext: string | false = false,
   outDirCache: { [key: string]: true | undefined } = {}
 ) {
   let watcher: FSWatcher | undefined;
@@ -90,7 +94,7 @@ async function recurTsPathReplace(
       const jsFiles = await jsFileSearch(outDir);
 
       // rewrite the imports
-      await replaceAliasImports(outDir, jsFiles, dictionary);
+      await replaceAliasImports(outDir, jsFiles, dictionary, ext);
 
       // If the libs are true, rewrite all the reference project imports
       // This will recursively look up the tree
@@ -100,6 +104,7 @@ async function recurTsPathReplace(
             project,
             /*refs*/ true,
             watchFiles,
+            ext,
             outDirCache
           );
           subProcesses.push(subPr);
@@ -118,7 +123,7 @@ async function recurTsPathReplace(
           watcher = watch(
             outDir,
             { recursive: true },
-            onOutDirChange(outDir, dictionary)
+            onOutDirChange(outDir, dictionary, ext)
           );
         }
       }

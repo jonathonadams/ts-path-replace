@@ -118,7 +118,11 @@ export function watcherCloseHandler(watcher: FSWatcher): Promise<void> {
   });
 }
 
-export function onOutDirChange(outDir: string, dictionary: IPathDictionary) {
+export function onOutDirChange(
+  outDir: string,
+  dictionary: IPathDictionary,
+  ext: string | false
+) {
   return (eventType: string | undefined, filePath: string | undefined) => {
     if (eventType === 'update' && filePath) {
       try {
@@ -126,7 +130,7 @@ export function onOutDirChange(outDir: string, dictionary: IPathDictionary) {
         const extension = extname(filePath);
         if (extension === '.js' || extension === '.jsx') {
           // The file needs to be an array here
-          replaceAliasImports(outDir, [filePath], dictionary);
+          replaceAliasImports(outDir, [filePath], dictionary, ext);
         }
       } catch (err) {
         // ignore error

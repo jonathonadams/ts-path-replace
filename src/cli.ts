@@ -1,11 +1,11 @@
 import minimist from 'minimist';
 import { error } from './logging';
-import { tsPathReplace } from './index';
+import { tsPathReplace } from './public_api';
 
 export function cli(argv: string[]) {
   const args = minimist(argv.slice(2), {
-    boolean: ['help', 'references', 'watch'],
-    string: ['tsConfig']
+    boolean: ['help', 'references', 'watch', 'w'],
+    string: ['tsConfig', 'ext'],
   });
 
   // Print the help
@@ -25,13 +25,18 @@ export function cli(argv: string[]) {
     args.references = false;
   }
 
-  if (!args.watch) {
+  if (!args.watch || !args.w) {
     args.watch = false;
+  }
+
+  if (!args.ext) {
+    args.ext = false;
   }
 
   tsPathReplace({
     tsConfig: args.tsConfig,
     references: args.references,
-    watch: args.watch
+    watch: args.watch,
+    ext: args.ext,
   });
 }

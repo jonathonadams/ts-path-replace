@@ -6,7 +6,8 @@ import { addPathDepthFromCWD, doesStringEndInWildcard } from './utils';
 export async function replaceAliasImports(
   outDir: string,
   files: string[],
-  paths: { [alias: string]: string | undefined }
+  paths: { [alias: string]: string | undefined },
+  ext: string | false
 ) {
   return Promise.all(
     files.map((file) => {
@@ -18,7 +19,7 @@ export async function replaceAliasImports(
       const substr = file.substr(outDir.length + 1);
 
       // If in the root directory, length is 1, hence subtract one to get the depth from root
-      const depthFromRootDirectory = substr.split(/\\|\//).length - 1;
+      const rootDirDepth = substr.split(/\\|\//).length - 1;
 
       const options: any = {
         from: [],
@@ -31,7 +32,8 @@ export async function replaceAliasImports(
         /**
          * For the keys that have wildcards at the end, just remove the trailing slash and '*'.
          */
-        if (doesStringEndInWildcard(key)) {
+        const isWildcard = doesStringEndInWildcard(key);
+        if (isWildcard) {
           key = key.substring(0, key.length - 2);
           relativePath = relativePath.substring(0, relativePath.length - 2);
         }
@@ -46,12 +48,15 @@ export async function replaceAliasImports(
         const regex = new RegExp(regexStr, 'g');
 
         // because windows will read the referenced projects paths with "\", replace them with posix separators "/"
-        const replacementString = `${addPathDepthFromCWD(
-          depthFromRootDirectory
+        let replacement = `${addPathDepthFromCWD(
+          rootDirDepth
         )}${relativePath.replace(/\\/g, '/')}`;
 
+        // Add the extension if supplied and it is not a wildcard
+        if (ext && !isWildcard) replacement += '.' + ext;
+
         options.from.push(regex);
-        options.to.push(replacementString);
+        options.to.push(replacement);
       });
 
       // Set the files property
