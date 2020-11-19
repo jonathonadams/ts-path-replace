@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.3...v1.1.0) (2020-11-19)
+
+
+### Features
+
+* add option to append file extension ([833ddd0](https://github.com/jonathonadams/ts-path-replace/commit/833ddd0c38fe5f48c3b0fd2b42aa50c51c222975))
+* add option to append file extension ([8e03fd4](https://github.com/jonathonadams/ts-path-replace/commit/8e03fd43586fc623b87d564821bf3043ff840ca6))
+
 ## [1.0.3](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.2...v1.0.3) (2020-11-17)
 
 
