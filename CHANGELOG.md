@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/jonathonadams/ts-path-replace/compare/v1.1.0...v1.1.1) (2021-01-03)
+
+
+### Bug Fixes
+
+* bump dependencies and resolve npm audit ([1865468](https://github.com/jonathonadams/ts-path-replace/commit/1865468411f5f69ab998fd8eef130b9b7e97f7cf))
+
 # [1.1.0](https://github.com/jonathonadams/ts-path-replace/compare/v1.0.3...v1.1.0) (2020-11-19)
 
 
