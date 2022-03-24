@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "lodash.merge": "^4.6.2",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "node-watch": "^0.7.1",
     "replace-in-file": "^6.2.0"
   },
